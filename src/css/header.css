@@ -1,0 +1,78 @@
+.ring,
+.dee {
+    fill: #fff;
+}
+
+.blob {
+    fill: none;
+}
+
+.header {
+    background: #000;
+}
+.header .branding {
+    display: flex;
+    justify-content: space-between;
+}
+
+.branding .logo-svg {
+    margin-top: 15px;
+    margin-left: 15px;
+    width: 60px;
+    height: 60px;
+    margin-bottom: 15px;
+    -webkit-transition: all 5 ease;
+    -o-transition: all 5 ease;
+    transition: all 5 ease;
+}
+
+.user-nav {
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    margin-right: 0px;
+    width: 240px;
+}
+
+.user-nav .cart-icon {
+    position: relative;
+}
+
+.user-nav .cart-count {
+    position: absolute;
+    top: -10px;
+    left: 5px;
+    background-color: green;
+    color: white;
+    font-size: .5em;
+    font-weight: 300;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    line-height: 15px;
+    text-align: center;
+    font-family: arial;
+}
+
+.user-nav .cart-svg {
+    width: 20px;
+    height: 20px;
+    margin-left: 10px;
+    order: 1;
+}
+
+
+
+.user-nav .user-login {
+    order: -1;
+}
+
+.user-nav .user-login .link {
+    color: #fff;
+    text-decoration: none;
+    margin-right:10px;
+}
+
+.user-nav .user-login .link:hover {
+    text-decoration: underline;
+}

@@ -1,0 +1,20 @@
+.main-nav {
+
+    box-sizing: border-box;
+    background-color: #ccc;
+}
+.main-nav .link {
+    display: inline-block;
+    padding: 10px 20px;
+    color: #333;
+    text-decoration: none;
+}
+.main-nav .link.active {
+    background-color: rgba(0, 0, 0, 0.4);
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.main-nav .link:hover {
+    background-color: rgba(0, 0, 0, 0.4);
+    color: rgba(255, 255, 255, 0.4);
+}

@@ -1,0 +1,144 @@
+@import url('normalize.css');
+@import url('http://fonts.googleapis.com/css?family=Open+Sans:100,300,400,700');
+@import url('http://fonts.googleapis.com/css?family=Goudy+Bookletter+1911');
+@import url('http://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300');
+
+html {
+    color: #222;
+    font-size: 1em;
+    line-height: 1.4;
+}
+
+body{
+    /* background: url(../img/crossword.png); */
+    transition: all 0.5s ease-in;
+}
+
+* { 
+    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+    -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+    box-sizing: border-box;         /* Opera/IE 8+ */
+}
+
+::-moz-selection {
+    background: #e67500;
+    color:#fff;
+    text-shadow: none;
+}
+
+::selection {
+    background: #e67500;
+    color:#fff;
+    text-shadow: none;
+}
+
+audio,
+canvas,
+img,
+svg,
+video {
+    vertical-align: middle;
+}
+
+h1, h2, h3, h4, p, li, label, a{
+    font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: 100;
+}
+
+p{
+  color:#969b9e;
+  line-height: 1.75em;
+}
+
+
+.container {
+	display: grid;
+    height: 100vh;
+    grid-template-rows: 90px 40px 2fr 40px;
+}
+
+.main-nav{
+	display: flex;
+}
+
+img{
+	min-width: 100%;
+}
+
+.artlist-wrapper{
+    padding: 20px;
+}
+
+.art-list{
+	display: flex;
+	flex-wrap: wrap;
+}
+.art-list .art-list-item{
+    margin: 10px;
+    max-width: 300px;
+}
+.art-list .artwork-wrapper{
+    border: 1px solid #ccc;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+.art-list .artwork-title{
+    font-weight: 400;
+    display: block;
+    margin-bottom: 5px;
+}
+.art-list .price{
+    display: block;
+    border-bottom: 5px;
+    font-weight: 7000;
+    font-size: 1.5em;
+}
+
+
+.heading.heading_one{
+    font-size: 3em;
+    font-weight: 700;
+    text-shadow: 1px 1px 1px rgba(0,0,0,0.4);    
+}
+.heading.heading_one.art-shop{
+    width: 100%;
+    text-align: center;
+    height: 20vh;
+    line-height: 20vh;
+    background-color:  rgba(0,0,0,0.75);
+    color: #fff;
+}
+
+.heading.heading_two{
+    font-size: 2em;
+    font-weight: 400;
+    &.add-new, &.edit-artwork{
+        margin: 20px 0 20px 20px;
+    }
+}
+
+.message{
+    display: block;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-top: 3px solid #ccc;
+    margin: 0 20px;
+    border-radius: 5px;
+}
+.message.success{
+    color: green;
+    border-color: green;
+}
+.message.error{
+    color: red;
+    border-color: red;
+}
+
+.hidden{
+    display:none;
+}
+.clearfix{
+    content: "";
+    clear: right;
+    display: table;
+}

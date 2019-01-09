@@ -1,0 +1,43 @@
+.form-wrapper .fieldset{
+    display: block;
+    padding: 10px;
+    border: none;
+}
+
+.form-wrapper .fieldset .label{
+    display: block;
+    font-weight: 400;
+    margin-bottom: 5px;
+}
+
+.input{
+	border: 1px solid rgba(0,0,0,0.24);
+	width: 100%;
+	padding: 5px;
+	border-radius: 5px;
+}
+
+.input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+    color: #666;
+    font-weight: 200;
+}
+.input::-moz-placeholder { /* Firefox 19+ */
+    color: #666;
+    font-weight: 200;
+}
+.input:-ms-input-placeholder { /* IE 10+ */
+    color: #666;
+    font-weight: 200;
+}
+.input:-moz-placeholder { /* Firefox 18- */
+    color: #666;
+    font-weight: 200;
+}
+.input.input.err{
+    border-color: red;
+    outline-color: red;
+}
+.input.input.match{
+    border-color: green;
+    outline-color: green;
+}
