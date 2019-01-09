@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
 import Banner from './banner';
 import Artlist from './artlist';
-import UpdateForm from './updateForm';
+import AddNew from './add';
 import '../css/nav.css';
 
 function Navigation(){
@@ -25,7 +25,7 @@ function Navigation(){
                     <Route exact path="/about" render = {() => <h1>about</h1>} />
                     <Route exact path="/store" component = {Artlist} />
                     <Route exact path="/contact" render = {() => <h1>contact</h1>} />
-                    <Route exact path="/add" component = {UpdateForm} />
+                    <Route exact path="/add" component = {AddNew} />
                     <Route exact path="/edit" render = {() => <h1>edit</h1>} />
                     <Route exact path="/delete" render = {() => <h1>delete</h1>} />
                 </div>

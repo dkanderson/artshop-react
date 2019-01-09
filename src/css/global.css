@@ -112,9 +112,9 @@ img{
 .heading.heading_two{
     font-size: 2em;
     font-weight: 400;
-    &.add-new, &.edit-artwork{
-        margin: 20px 0 20px 20px;
-    }
+}
+.heading.heading_two.add-new, .heading.heading_two.edit-artwork{
+    margin: 20px 0 20px 20px;
 }
 
 .message{

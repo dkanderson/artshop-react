@@ -4,29 +4,30 @@ import '../css/input.css';
 class InputField extends Component{
     constructor(props){
         super(props);
-        this.state = {
-            value: '',
-            valid: false
-        }
         this.handleChange = this.handleChange.bind(this);
+        this.validate = this.validate.bind(this)
     }
-
+    
     handleChange(e){
-        this.setState({
-            value: e.currentTarget.value
-        })
+        this.props.handleInputChange(e.target.value, e.target.name);
+    }
+    validate(){
+        this.props.isValid(this.props.value ? true : false);
     }
     render(){
         return(
             <fieldset className="fieldset">
-                <label className="label" htmlFor={this.props.name}>{this.props.label}:</label>
+                {this.props.label && <label className="label" htmlFor={this.props.name}>{this.props.label}:</label>}
                 <div className="input-wrapper">
                     <input className={this.props.className} 
                         id={this.props.id} 
                         type={this.props.type} 
                         name={this.props.name} 
                         placeholder={this.props.placeholder} 
-                        onChange={this.handleChange} />
+                        onChange={this.handleChange}
+                        onBlur = {this.validate}
+                        value = {this.props.value}
+                        />
                 </div>
             </fieldset>
         );
