@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import ArtshopHeader from './header.js';
 import Navigation from './nav';
 import Footer from './footer';

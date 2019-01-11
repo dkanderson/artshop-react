@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Button from './button';
 import InputField from './inputField';
-import Message from './message';
 import '../css/forms.css';
 import '../css/global.css';
 
@@ -17,10 +16,11 @@ class UpdateForm extends Component{
             status: '',
             medium: '',
             subject: '',
-            tyoe: '',
+            type: '',
             size: '',
             orientation: '',
-            price: ''
+            price: '',
+            url: this.props.url
         }
     }
 
@@ -40,26 +40,25 @@ class UpdateForm extends Component{
         if(validate(this.state)){
             this.submitForm(this.state);
         } else {
-            this.setState({message: "All fields required"});
-            this.messageType = 'error';
+            this.props.showMessage({message: "All fields required", messageType: "error"});
         }
         
     }
 
     submitForm(data){
-        fetch('api/artwork', {
+        fetch('api/addnew', {
             method: 'POST',
-            body: data,
+            body: JSON.stringify(data),
             headers: {
-                'Content-type': 'application/json'
+                'Content-Type': 'application/json'
             }
         })
-        .then(response => response.json())
         .then(response => {
-            this.messageType = 'success';
-            this.setState({
-                message: `${this.state.title} was uploaded successfully`
-            })
+            if ( response.status === 200 ) {
+                this.messageType = 'success';
+                this.props.showMessage({message: `${this.state.title} was updated successfully`, messageType: 'success'});
+                this.props.toggleForm();
+            }
         })
        
     }
@@ -69,12 +68,9 @@ class UpdateForm extends Component{
     }
 
     render(){
-        let message = this.state.message ? this.state.message : '';
-        let messageType = this.messageType;
 
         return(
-            <div>
-            <Message message={message} messageType={messageType} />
+            
             <div className="form-wrapper add-new-form-wrapper clearfix">
 				<form className="form add-new">
                     <InputField 
@@ -162,12 +158,12 @@ class UpdateForm extends Component{
                         type="hidden"
                         name="url"
                         handleInputChange = {this.handleChange}
-                        value = {this.props.data}
+                        value = {this.props.url}
                         isValid = {this.isValid}
                     />
 					<Button onClick={this.handleClick} title={this.props.submitTitle} className="button form-submit" />
 				</form>
-            </div>
+            
             </div>
         );
     }
@@ -186,6 +182,7 @@ function validate(state){
     delete newState.message;
 
     for (let i in newState){
+        console.log(newState[i]);
         if(!newState[i]){
             return false;
         }

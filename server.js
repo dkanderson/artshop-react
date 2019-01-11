@@ -146,7 +146,7 @@ app.post('/api/upload', (req, res) => {
 
     let artworkFile = req.files.artwork;
 
-    artworkFile.mv(`${__dirname}/public/artwork/${req.files.artwork.name}`, err => {
+    artworkFile.mv(`${__dirname}/src/artwork/${req.files.artwork.name}`, err => {
 
         if (err) {
             return res.status(500).send({ title: 'An unexpected error occured', message: err.message });
@@ -312,7 +312,7 @@ app.get('/api/authenticate', (req, res, next) => {
 
 
 // Set main html file
-app.use((req, res) => res.sendFile(`${__dirname}/public/index.html`));
+// app.use((req, res) => res.sendFile(`${__dirname}/public/index.html`));
 
 // Connect to mongoDB
 mongoose.connect(dbUrl, { useNewUrlParser: true }, (err) => {

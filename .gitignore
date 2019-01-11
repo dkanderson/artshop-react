@@ -10,6 +10,7 @@
 
 # production
 /build
+/src/artwork
 
 # misc
 .DS_Store
