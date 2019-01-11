@@ -24,13 +24,6 @@ app.use(express.json());
 app.use(fileUpload());
 
 
-//Set public folder as root
-app.use(express.static('public'));
-
-// Set static routes
-app.use('/uploads', express.static(`${__dirname}/src/artwork/`));
-app.use('/scripts', express.static(`${__dirname}/node_modules/`)); //combine js files later
-
 // Handle errors
 const errorHandler = (err, req, res) => {
     if (err.response) {
@@ -146,7 +139,7 @@ app.post('/api/upload', (req, res) => {
 
     let artworkFile = req.files.artwork;
 
-    artworkFile.mv(`${__dirname}/src/artwork/${req.files.artwork.name}`, err => {
+    artworkFile.mv(`${__dirname}/public/artwork/${req.files.artwork.name}`, err => {
 
         if (err) {
             return res.status(500).send({ title: 'An unexpected error occured', message: err.message });
@@ -309,10 +302,6 @@ app.get('/api/authenticate', (req, res, next) => {
     }
 
 });
-
-
-// Set main html file
-// app.use((req, res) => res.sendFile(`${__dirname}/public/index.html`));
 
 // Connect to mongoDB
 mongoose.connect(dbUrl, { useNewUrlParser: true }, (err) => {

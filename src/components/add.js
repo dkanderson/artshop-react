@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import UpdateForm from './updateForm';
 import UploadFile from './uploadFile';
 import Message from './message';
+import DisplayImage from './displayImage';
 
 class AddNew extends Component{
     constructor(props){
@@ -53,16 +54,27 @@ class AddNew extends Component{
         return(
             <div>
                 <h2 className="heading heading_two add-new">Add a new piece of art work</h2>
-                <UploadFile setUrl={this.fileStatusChange} showMessage={this.toggleMessage} />
                 { this.state.showMessage && 
-                    <Message message={this.state.message.message} messageType={this.state.message.messageType} /> }
+                    <Message 
+                        message = {this.state.message.message} 
+                        messageType = {this.state.message.messageType} 
+                    /> }
+                    <UploadFile 
+                        setUrl = {this.fileStatusChange} 
+                        showMessage = {this.toggleMessage} 
+                    />
+                { this.state.fileUploaded && 
+                    <DisplayImage 
+                        url = {this.state.url} 
+                        title = "insert title"
+                    /> }
                 { this.state.showForm && 
                     <UpdateForm 
-                        submitTitle="add new" 
-                        mode="add" 
+                        submitTitle = "add new" 
+                        mode = "add" 
                         url = {this.state.url} 
-                        toggleForm={this.hideForm} 
-                        showMessage={this.toggleMessage} /> }
+                        toggleForm = {this.hideForm} 
+                        showMessage = { this.toggleMessage } /> }
             </div>
         );
     }

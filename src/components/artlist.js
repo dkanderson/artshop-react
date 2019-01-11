@@ -32,7 +32,7 @@ class Artlist extends Component{
     populate(artworks){
     
         return artworks.map((artwork, index) => {
-            let url = require(`../artwork/${artwork.url}`);
+            let url = `${process.env.PUBLIC_URL}/artwork/${artwork.url}`;
             return (
             <div className="art-list-item" key={artwork._id}>
                 <span className="artwork-title">{artwork.title}</span>
