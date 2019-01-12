@@ -12,7 +12,7 @@ class Button extends Component{
     }
     render(){
         return(
-            <button onClick={this.props.onClick} className={this.props.className} >
+            <button onClick={this.props.onClick} className={this.props.className} data-index={this.props.index} >
             { this.props.icon && 
                 <i className={this.props.iconClass}>{this.props.icon}</i> }
             {this.props.title}</button>

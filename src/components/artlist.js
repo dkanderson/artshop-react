@@ -68,11 +68,9 @@ class Artlist extends Component{
         if(cartCookie){
             cartCookie.push({title, price, url});
             Cookies.set('cart', cartCookie);
-            console.log(cartCookie);
             this.props.updateCount(cartCookie.length);
         } else {
             Cookies.set('cart', [{ title, price, url }]);
-            console.log(cartCookie);
             this.props.updateCount(cartCookie.length);
         }
 

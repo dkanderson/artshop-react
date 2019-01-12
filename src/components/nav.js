@@ -5,6 +5,8 @@ import Artlist from './artlist';
 import AddNew from './add';
 import '../css/nav.css';
 import EditArtwork from './edit';
+// import NoMatch from './noMatch';
+import ShoppingCart from './shoppingCart';
 
 function Navigation(props){
     return (
@@ -22,13 +24,14 @@ function Navigation(props){
 
                 <div id="app" className="app-container">
                     <Banner title="Artshop" />
-                    <Route exact path="/" component = {() => <Artlist mode = "add to cart" updateCount = {(count) => props.updateCount(count)} />} />
+                    <Route exact path="/" component = {() => <Artlist mode = "add to cart" updateCount = {props.updateCount} />} />
                     <Route exact path="/about" render = {() => <h1>about</h1>} />
-                    <Route exact path="/store" render = {() => <Artlist mode = "add to cart" updateCount = {(count) => props.updateCount(count)} />} />
+                    <Route exact path="/store" render = {() => <Artlist mode = "add to cart" updateCount = {props.updateCount} />} />
                     <Route exact path="/contact" render = {() => <h1>contact</h1>} />
                     <Route exact path="/add" component = {AddNew} />
                     <Route exact path="/edit" render = {() => <EditArtwork />} />
                     <Route exact path="/delete" render = {() => <Artlist mode = "delete" />} />
+                    <Route path="/cart" render = {() => <ShoppingCart updateCount = {props.updateCount} />} />
                 </div>
             </div>
         </Router>

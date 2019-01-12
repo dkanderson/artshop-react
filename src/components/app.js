@@ -22,7 +22,7 @@ class App extends React.Component{
         }
     }
 
-    updateCount(count){
+    updateCount = (count) => {
         this.setState({
             cartCount: count
         })
@@ -32,7 +32,7 @@ class App extends React.Component{
         return (
             <div>
                 <ArtshopHeader count = {this.state.cartCount} />
-                <Navigation updateCount = {(count) => this.updateCount(count)} />
+                <Navigation updateCount = {this.updateCount} />
                 <Footer />
             </div>
         );
