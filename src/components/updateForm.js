@@ -11,6 +11,7 @@ class UpdateForm extends Component{
         this.handleClick = this.handleClick.bind(this);
         this.submitForm = this.submitForm.bind(this);
         this.isValid = this.isValid.bind(this);
+        this.populateFields = this.populateFields.bind(this);
         this.state = {
             title: '',
             status: '',
@@ -46,8 +47,16 @@ class UpdateForm extends Component{
     }
 
     submitForm(data){
-        fetch('api/addnew', {
-            method: 'POST',
+        let method = 'POST';
+        let apiUrl = 'api/addnew';
+        if(this.props.hasOwnProperty('mode')) {
+           if ( this.props.mode === 'edit' ) {
+               method = 'PUT';
+               apiUrl = `api/artwork/${this.props.editKey}`;
+           }
+        } 
+        fetch(apiUrl, {
+            method: method,
             body: JSON.stringify(data),
             headers: {
                 'Content-Type': 'application/json'
@@ -55,7 +64,6 @@ class UpdateForm extends Component{
         })
         .then(response => {
             if ( response.status === 200 ) {
-                this.messageType = 'success';
                 this.props.showMessage({message: `${this.state.title} was updated successfully`, messageType: 'success'});
                 this.props.toggleForm();
             }
@@ -63,8 +71,32 @@ class UpdateForm extends Component{
        
     }
 
-    populateFields(data){
+    componentDidMount(){
+        if ( this.props.hasOwnProperty('editKey')) {
+            this.populateFields(this.props.editKey);
+        }    
+    }
 
+    populateFields(title){
+        fetch(`api/artwork/${title}`)
+            .then(response => response.json())
+            .then((data) => {
+                this.setState({
+                    title: data.title,
+                    status: data.status,
+                    medium: data.medium,
+                    subject: data.subject,
+                    type: data.type,
+                    size: data.size,
+                    orientation: data.orientation,
+                    price: data.price,
+                    url: data.url
+                })
+            })
+            .catch ( error => {
+                console.error(error);
+            });
+            
     }
 
     render(){
