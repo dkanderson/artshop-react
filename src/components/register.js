@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Inputfield from './inputField';
 import Button from './button';
+import validator from '../validator';
 
 class RegisterForm extends Component{
     constructor(props){
@@ -10,6 +11,25 @@ class RegisterForm extends Component{
             email: '',
             password: '',
             passwordConf: '',
+            validation: {
+                username: {
+                    status: 'pristine',
+                    valid: false,
+                    exists: false 
+                },
+                email: {
+                    status: 'pristine',
+                    valid: false
+                },
+                password: {
+                    status: 'pristine',
+                    valid: false
+                },
+                passwordConf: {
+                    status: 'pristine',
+                    valid: false
+                }
+            }
         }
         this.handleChange = this.handleChange.bind(this);
         this.validate = this.validate.bind(this);
@@ -22,41 +42,22 @@ class RegisterForm extends Component{
         })
         
     }
-    validate(status, name){
-        if (status === 'err') {
-            this.setState({
-                showMessage: showError(name)
-            })
-        } else if ( status === 'match') {
-            this.setState({
-                showMessage: ''
-            })
-        }
-
-        if (status !== "pristine") {
-            fetch(`api/users/${this.state[name]}`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
-            .then(res => res.json())
-            .then(data => {
-                this.setState({
-                    exists: data._id ? true : false
-                })
-            })
-            .catch(console.error)
-        } 
+    validate(e){
+        const vData = validator(this.state);
+        this.setState({
+            validation: vData,
+            message: vData[e.target.name].msg
+        });
     }
 
     handleClick(e){
         e.preventDefault();
-        let regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        let emailCheck = this.state.email.match(regex);
-        const data = preSubmitValidation(this.state);
 
-        if(data && emailCheck){
+        const isValid = preSubmitValidation(this.state.validation);
+        let data = Object.assign({}, this.state);
+        delete data.validation;
+
+        if(isValid){
             fetch('api/users', {
                 method: 'POST',
                 body: JSON.stringify(data),
@@ -72,10 +73,10 @@ class RegisterForm extends Component{
         return(
             <div className="position-form">
 				<div className="form-wrapper form-wrapper-register-form">
-                    { this.state.showMessage && <div id="error-msg-wrapper" className="error-msg">
-                        <strong>Error: </strong><span id="error-msg">{this.state.showMessage.msg}</span>
-                    </div> }
-					<form className="form form-register" id="registration-form" action="">
+                    <form className="form form-register" id="registration-form" action="">
+                    { this.state.message && <div id="error-msg-wrapper" className="error-msg">
+                            <strong>Error: </strong><span id="error-msg">{this.state.message}</span>
+                        </div> }
                         <Inputfield 
                             className = {`input input-username`}
                             label = "username"
@@ -84,10 +85,12 @@ class RegisterForm extends Component{
                             name = "username"
                             placeholder = "enter username"
                             handleInputChange = {this.handleChange}
-                            isValid = {this.validate}
+                            validate = {this.validate}
+                            isValid = {this.state.validation.username.valid}
+                            status = {this.state.validation.username.status}
                             value = {this.state.username}
                             autoComplete = "username"
-                            exists = {this.state.exists}
+                            exists = {this.state.validation.username.exists}
                         />
                         <Inputfield 
                             className = "input input-email"
@@ -97,7 +100,9 @@ class RegisterForm extends Component{
                             name = "email"
                             placeholder = "enter email address"
                             handleInputChange = {this.handleChange}
-                            isValid = {this.validate}
+                            validate = {this.validate}
+                            isValid = {this.state.validation.email.valid}
+                            status = {this.state.validation.email.status}
                             value = {this.state.email}
                             autoComplete = "email address"
                         />
@@ -108,7 +113,9 @@ class RegisterForm extends Component{
                             type = "password"
                             name = "password"
                             handleInputChange = {this.handleChange}
-                            isValid = {this.validate}
+                            validate = {this.validate}
+                            isValid = {this.state.validation.password.valid}
+                            status = {this.state.validation.password.status}
                             value = {this.state.password}
                             autoComplete = "new-password"
                         />
@@ -119,7 +126,9 @@ class RegisterForm extends Component{
                             type = "password"
                             name = "passwordConf"
                             handleInputChange = {this.handleChange}
-                            isValid = {this.validate}
+                            validate = {this.validate}
+                            isValid = {this.state.validation.passwordConf.valid}
+                            status = {this.state.validation.passwordConf.status}
                             value = {this.state.passwordConf}
                             autoComplete = "new-password"
                         />
@@ -135,40 +144,14 @@ class RegisterForm extends Component{
     }
 }
 
-function showError(name){
-    let error = {
-        username: {
-            hasError: true,
-            msg: 'unique username is required'
-        },
-        email: {
-            hasError: true,
-            msg: 'valid email address is required'
-        },
-        password: {
-            hasError: true,
-            msg: 'password must be 8 characters or more'
-        },
-        passwordconf: {
-            hasError: true,
-            msg: 'passwords do not match'
-        }
-    };
+function preSubmitValidation(valid) {
 
-    return error[name];
-}
-
-function preSubmitValidation(state) {
-    let temp = Object.assign({}, state);
-    delete temp.showMessage;
-    delete temp.exists;
-
-    for(let i in temp) {
-        if ( !temp[i] ) {
-            return undefined;
+    for(let i in valid) {
+        if ( !valid[i].valid ) {
+            return false;
         } 
     }
-    return temp;
+    return true;
 }
 
 export default RegisterForm;
