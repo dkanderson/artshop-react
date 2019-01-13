@@ -214,7 +214,6 @@ function validate(state){
     delete newState.message;
 
     for (let i in newState){
-        console.log(newState[i]);
         if(!newState[i]){
             return false;
         }

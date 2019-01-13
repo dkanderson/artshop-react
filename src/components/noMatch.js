@@ -1,10 +1,11 @@
 import React from 'react';
+import '../css/404.css';
 
-function NoMatch(){
+function NoMatch({ location }){
     return(
-        <div>
-            <h1>Made a wrong turn somewhere</h1>
-            <h2>This page only exists in your dreams</h2>
+        <div className="error-page">
+            <h1 class="error h1">Made a wrong turn somewhere</h1>
+            <h2><span className="loc">{`${location.pathname}`}</span> only exists in your dreams</h2>
         </div>
     )
 }

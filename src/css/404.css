@@ -1,0 +1,9 @@
+.error-page{
+    padding: 40px;
+}
+.h1.error{
+    font-weight: 700;
+}
+.loc{
+    color: lightblue;
+}
