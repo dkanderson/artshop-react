@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Link, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Link, Route, Switch, Redirect } from 'react-router-dom';
 import Banner from './banner';
 import Artlist from './artlist';
 import AddNew from './add';
@@ -9,8 +9,10 @@ import NoMatch from './noMatch';
 import ShoppingCart from './shoppingCart';
 import LoginForm from './login';
 import RegisterForm from './register';
+import Cookies from 'js-cookie';
 
 function Navigation(props){
+    
     return (
         <Router>
             <div>
@@ -31,19 +33,52 @@ function Navigation(props){
                         <Route exact path="/about" render = {() => <h1>about</h1>} />
                         <Route exact path="/store" render = {() => <Artlist mode = "add to cart" updateCount = {props.updateCount} />} />
                         <Route exact path="/contact" render = {() => <h1>contact</h1>} />
-                        <Route exact path="/add" component = {AddNew} />
-                        <Route exact path="/edit" render = {() => <EditArtwork />} />
-                        <Route exact path="/delete" render = {() => <Artlist mode = "delete" />} />
+                        <Route exact path="/add" render = {() => <PrivateRoute component = {AddNew} />} />
+                        <Route exact path="/edit" render = {() => <PrivateRoute component = {EditArtwork} />} />
+                        <Route exact path="/delete" render = {() => <PrivateRoute component = {Artlist} />} />
                         <Route path="/cart" render = {() => <ShoppingCart updateCount = {props.updateCount} />} />
-                        <Route exact path="/login" render = {() => <LoginForm />} />
+                        <Route exact path="/login" component = {LoginForm} />
                         <Route exact path="/register" render = {() => <RegisterForm />} />
                         <Route component={NoMatch} />
                     </Switch>
                 </div>
             </div>
         </Router>
-        
     );
+    
 }
+
+function PrivateRoute({ component: Component, ...rest }) {
+    let auth = false || Cookies.get('user');
+    
+    fetch('api/authenticate')
+        .then(res => {
+            if (res.status === 200 ) {
+                auth = true;
+            } else {
+               auth = false;
+               Cookies.remove('user');
+            }
+        });
+    
+    return (
+      <Route
+        {...rest}
+        render={props =>
+          auth ? (
+            <Component {...props} />
+          ) : (
+            <Redirect
+              to={{
+                pathname: "/login",
+                state: { from: props.location }
+              }}
+            />
+          )
+        }
+      />
+    );
+  }
+  
 
 export default Navigation;

@@ -41,7 +41,7 @@ class Artlist extends Component{
             this.addToCart(title, price, url);
         } else if ( this.props.mode === "edit") {
             this.editArtwork( title );
-        } else if ( this.props.mode === "delete") {
+        } else {
             this.deleteArtwork( title );
         }
         
@@ -56,7 +56,7 @@ class Artlist extends Component{
                 <span className="artwork-title">{artwork.title}</span>
                 <div className="artwork-wrapper"><img className="image image-artwork" src={url} alt={artwork.title} /></div>
                 <span className="price">{formatCurrency(artwork.price)}</span>
-                <Button title={this.props.mode} onClick={() => this.handleClick(index)} className="button button-cart add-cart" />
+                <Button title={this.props.mode || 'delete'} onClick={() => this.handleClick(index)} className="button button-cart add-cart" />
             </div>
             );
         })

@@ -16,7 +16,7 @@ function ArtshopHeader(props){
                         <CartLink count = {props.count}/>
                     </div>
                     <div id="user-login" className="user-login">
-                        <UserLogin />
+                        <UserLogin test = '' />
                     </div>
                 </div>
             </div>

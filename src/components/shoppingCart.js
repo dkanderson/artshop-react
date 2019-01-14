@@ -50,6 +50,7 @@ class ShoppingCart extends Component{
 
     }
     render(){
+        const total = cartTotal(Cookies.getJSON('cart'));
         return(
             <div>
                 <h2 className="heading heading_two shopping-cart-heading">Shopping Cart</h2>
@@ -65,8 +66,9 @@ class ShoppingCart extends Component{
                         
                             {this.loadCartItems()}
                             <tr>
-                                <td colSpan="3"></td>
-                                <td id="cart-total" className="td td-cart-total"></td>
+                                <td colSpan="2"></td>
+                                <td>Total</td>
+                                <td id="cart-total" className="td td-cart-total">{formatCurrency(total)}</td>
                             </tr>
                         </tbody>
 
@@ -75,6 +77,18 @@ class ShoppingCart extends Component{
             </div>
         );
     }
+}
+
+function cartTotal( cartData ){ 
+
+    const cartTotal = cartData.reduce((accumulator, currentValue) => {
+
+        let x = (+currentValue.price);
+        return accumulator + x;
+
+    }, 0);
+
+    return cartTotal
 }
 
 export default ShoppingCart;
